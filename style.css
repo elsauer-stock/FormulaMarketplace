@@ -1,0 +1,94 @@
+.password {
+	position: relative;
+  margin-bottom: 10px;
+}
+.password-control {
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url(/Login/no-view.svg) 0 0 no-repeat;
+}
+.password-input{
+  position: absolute;
+	top: 15px;
+	right: 10px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+}
+.password-con.view {
+	background: url(/Login/view.svg) 0 0 no-repeat;
+}
+body {
+  font-family: 'CenturyGothic', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+.logo {
+  width: 250px;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-size: 36px;
+  color: #666;
+  margin: 0 0 40px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 260px;
+  padding: 15px 20px;
+  border-radius: 15px;
+  border: none;
+  background: #eaeaea;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  background: #fff;
+}
+
+.toggle-password {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+button {
+  width: 300px;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  background: #009688;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+button:hover {
+  background: #00796b;
+}
