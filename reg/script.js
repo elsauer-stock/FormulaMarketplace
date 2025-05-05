@@ -1,73 +1,51 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const targetTab = this.getAttribute('data-tab');
-
-            // Убираем активный класс у всех кнопок и контентов
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            // Добавляем активный класс к выбранной кнопке и контенту
-            this.classList.add('active');
-            document.getElementById(targetTab).classList.add('active');
-        });
+// Подключение Supabase
+const supabase = window.supabase.createClient(
+    'https://mnsluarozhgjzxzyceyc.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
+  );
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    // Спойлеры
+    document.querySelectorAll('.spoiler-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
     });
-});
-        // JavaScript для открытия/закрытия спойлеров
-        document.querySelectorAll('.spoiler-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const content = button.nextElementSibling;
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-            const avatar = document.getElementById('openCabinet');
-            const modal = document.getElementById('personalCabinetModal');
-            const closeButton = document.querySelector('.close-button');
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');            
-                });
-                // Получаем элементы
-const modal = document.getElementById("personalCabinetModal");
-const openModalBtn = document.getElementById("openModalBtn");
-const closeModalBtn = document.getElementById("closeModalBtn");
-const avatarInput = document.getElementById("avatarInput");
-const avatarPreview = document.getElementById("avatarPreview");
-const changeAvatarBtn = document.getElementById("changeAvatarBtn");
-
-// Открыть модальное окно
-openModalBtn.onclick = function () {
-    modal.style.display = "block";
-};
-
-// Закрыть модальное окно
-closeModalBtn.onclick = function () {
-    modal.style.display = "none";
-};
-
-// Закрыть модальное окно при клике вне его области
-window.onclick = function (event) {
-    if (event.target === modal) {
-        modal.style.display = "none";
+  
+    // Проверка сессии
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        window.location.href = 'login.html';
+      }
+    });
+  });
+  
+  // Открытие модалки с профилем
+  function openSettings() {
+    fetch('settings-modal.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('settingsModalContainer').innerHTML = html;
+        setTimeout(() => {
+          if (typeof loadProfile === 'function') {
+            loadProfile();
+          }
+        }, 100);
+      })
+      .catch(err => {
+        console.error("Ошибка загрузки модального окна:", err);
+      });
+  }
+  
+  // Глобальная функция выхода
+  async function logout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      alert('Ошибка выхода: ' + error.message);
+    } else {
+      window.location.href = 'login.html';
     }
-};
-
-// Смена аватарки
-changeAvatarBtn.onclick = function () {
-    avatarInput.click(); // Открываем диалог выбора файла
-};
-
-// Обработчик изменения файла
-avatarInput.onchange = function (event) {
-    const file = event.target.files[0]; // Получаем выбранный файл
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            avatarPreview.src = e.target.result; // Устанавливаем новую аватарку
-        };
-        reader.readAsDataURL(file); // Читаем файл как URL
-    }
-};
+  }
+  

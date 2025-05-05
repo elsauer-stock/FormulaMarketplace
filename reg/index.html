@@ -8,41 +8,12 @@
 </head>
 <body>
     <div class="container">
-       <!-- Аватарка для открытия личного кабинета -->
-<!-- Кнопка для открытия модального окна -->
+  <!-- Модальное окно -->
+  <h1>Главная страница</h1>
+  <button onclick="openSettings()">Открыть настройки</button>
 
-    <div class="avatar-container">
-        <!-- Модальное окно -->
-<div id="personalCabinetModal" class="modal">
-    <!-- Содержимое модального окна -->
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Настройки</h2>
-            <span class="close" id="closeModalBtn">&times;</span>
-        </div>
-    
-            <!-- Список действий -->
-            <div class="actions-list">
-                <ul>
-                    <li class="listen"><a href="#profile">Имя</a></li>
-                    <li class="listen"><a href="#settings">Email</a></li>
-                    <li class="listen"><a href="#logout">Solcoin</a></li>
-                    <li class="listen"><a href="#logout">Прогресс</a></li>
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-        <img src="https://via.placeholder.com/50" alt="Аватар пользователя" class="avatar" id="openCabinet">
-        <button id="openModalBtn" class="open-modal-btn">Настройки</button>
-        <div>
-                <div class="efir">
-                    
-                    <a href="/Login/dashboart.html"><button class="efir_submitt">Эфиры</button></a>
-                </div>
-        </div>
-    </div>
- 
+  <!-- Подключение модального окна -->
+  <div id="settingsModalContainer"></div>
         <!-- Логотип -->
         <div class="logo-container">
             <img src="logo.png" alt="Логотип" class="logo">
@@ -53,7 +24,7 @@
             <button class="spoiler-btn">Видео 1: Как начать продавать на Wildberries</button>
             <div class="spoiler-content">
                 <p>Посмотрите видео, чтобы узнать основы работы с платформой:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/CbYXY9LShr0" frameborder="0" allowfullscreen></iframe>
                 <button class="spoiler-btn">Тест 1: Основы работы с Wildberries</button>
                 <div class="spoiler-content">
                     <p>Пройдите тест, чтобы закрепить знания:</p>
@@ -119,6 +90,7 @@
               </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
     <script src="script.js"></script>
 </div>
 </body>

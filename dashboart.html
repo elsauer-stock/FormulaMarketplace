@@ -2,23 +2,34 @@
 <html>
 <head>
     <title>Панель управления</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
 </head>
 <body>
     <h1>Добро пожаловать!</h1>
     <p>Вы успешно вошли в систему</p>
     <button onclick="logout()">Выйти</button>
+    <button onclick="login()">дальше</button>
 
     <script>
-        // Подключаем Supabase
-        const supabaseUrl = 'https://mnsluarozhgjzxzyceyc.supabase.co/';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+      const supabase = window.supabase.createClient(
+        'https://mnsluarozhgjzxzyceyc.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
+      );
 
-        // Функция выхода
-        async function logout() {
-            await supabase.auth.signOut();
-            window.location.href = 'index.html';
-        }
+      // Проверка авторизации
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) window.location.href = '/login.html';
+      });
+
+      // Выход
+      async function logout() {
+        await supabase.auth.signOut();
+        window.location.href = '/login.html';
+      }
+          async function login() {
+        await supabase.auth.signOut();
+        window.location.href = '/reg/index.html';
+      }
     </script>
 </body>
 </html>
