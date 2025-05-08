@@ -8,97 +8,6 @@
   src: url(/Login/fonts/CenturyGothic.woff);
 }
 
-
-body {
-  font-family: 'CenturyGothic';
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  width: auto;
-}
-
-.container {
-  width: 1024px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-
-}
-
-.logo-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.logo {
-  width: 200px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.spoiler {
-  margin-bottom: 20px;
-}
-
-.spoiler-btn {
-  width: 40%;
-  padding: 10px;
-  background-color: #00867e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  text-align: left;
-  margin-bottom: 10px;
-  font-family: 'CenturyGothic';
-}
-
-.spoiler-btn:hover {
-  background-color: #00866e;
-}
-
-.spoiler-content {
-  display: none;
-  padding: 10px;
-  background-color: #f1f1f1;
-  border-radius: 8px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-iframe {
-  width: 100%;
-  height: 315px;
-  margin-top: 10px;
-}
-
-form {
-  margin-top: 10px;
-}
-
-form p {
-  margin-bottom: 10px;
-}
-
-button[type="submit"] {
-  padding: 10px 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100px;
-  margin-top: 10px;
-  font-family: 'CenturyGothic';
-}
-
-button[type="submit"]:hover {
-  background-color: #218838;
-}
-
 /* Кнопка для открытия модального окна */
 .open-modal-btn {
   display: inline-block;
@@ -131,3 +40,91 @@ button[type="submit"]:hover {
   cursor: pointer;
   font-size: 16px;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8fafd;
+  margin: 0;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 1024px;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: self-start;
+}
+.lesson {
+  padding: 15px;
+  background: #e0f7fa;
+  border-radius: 10px;
+  cursor: default;
+}
+
+.lesson.available {
+  cursor: pointer;
+  background-color: #b2ebf2;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.lesson.locked {
+  background-color: #d0dfe5;
+  color: #888;
+}
+
+.lesson-content {
+  display: none;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #007aff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  margin-top: 15px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  background: #eee;
+  border: 1px solid #ccc;
+}
+
+.tab.active {
+  background: #007aff;
+  color: white;
+}
+
+.tab-content {
+  margin-top: 15px;
+}
+

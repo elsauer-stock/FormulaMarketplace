@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+<div class="container">
   <!-- Модальное окно -->
   <h1>Главная страница</h1>
   <button onclick="openSettings()">Открыть настройки</button>
@@ -16,82 +16,52 @@
   <div id="settingsModalContainer"></div>
         <!-- Логотип -->
         <div class="logo-container">
-            <img src="logo.png" alt="Логотип" class="logo">
+            <img src="/logo.png" alt="Логотип" class="logo">
             <h1>Обучение продажам на Wildberries</h1>
         </div>
-        <!-- Спойлеры -->
-        <div class="spoiler">
-            <button class="spoiler-btn">Видео 1: Как начать продавать на Wildberries</button>
-            <div class="spoiler-content">
-                <p>Посмотрите видео, чтобы узнать основы работы с платформой:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/CbYXY9LShr0" frameborder="0" allowfullscreen></iframe>
-                <button class="spoiler-btn">Тест 1: Основы работы с Wildberries</button>
-                <div class="spoiler-content">
-                    <p>Пройдите тест, чтобы закрепить знания:</p>
-                    <form>
-                        <p><strong>Вопрос 1:</strong> Как зарегистрироваться на Wildberries?</p>
-                        <label><input type="radio" name="q1" value="a"> А) Через сайт</label><br>
-                        <label><input type="radio" name="q1" value="b"> Б) Через приложение</label><br>
-                        <label><input type="radio" name="q1" value="c"> В) Оба варианта верны</label><br>
-    
-                        <p><strong>Вопрос 2:</strong> Что нужно для начала продаж?</p>
-                        <label><input type="radio" name="q2" value="a"> А) ИНН</label><br>
-                        <label><input type="radio" name="q2" value="b"> Б) Счет в банке</label><br>
-                        <label><input type="radio" name="q2" value="c"> В) Все вышеперечисленное</label><br>
-    
-                        <button type="submit">Отправить</button>
-                    </form>
-              </div>
+          <div class="lesson-list">
+            <div class="lesson available" onclick="openLesson(1)">
+              <span>Урок 1</span>
+              <span class="status">Доступно</span>
+            </div>
+            <div class="lesson locked">Урок 2 — Откроется 17 мая</div>
+            <div class="lesson locked">Урок 3 — Откроется 23 мая</div>
+            <div class="lesson locked">Урок 4 — Откроется 10 мая</div>
+            <div class="lesson locked">Урок 5 — Откроется 11 мая</div>
+            <div class="lesson locked">Урок 6 — Откроется 12 мая</div>
+            <div class="lesson locked">Урок 7 — Откроется 13 мая</div>
+            <div class="lesson locked">Урок 8 — Откроется 14 мая</div>
+            <div class="lesson locked">Урок 9 — Откроется 15 мая</div>
+          </div>
+          <div class="lesson-content" id="lesson-content">
+            <button class="close-btn" onclick="closeLesson()">← Назад</button>
+            <h2>Урок 1: Рабочие тетради | Excel-база</h2>
+            <video controls width="100%">
+              <source src="https://storage.yandexcloud.net/video-less/%D0%A3%D0%A0%D0%9E%D0%9A_1_%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B5_%D1%82%D0%B5%D1%82%D1%80%D0%B0%D0%B4%D0%B8_%EF%BD%9C_%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BA_%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82%D1%83_%EF%BD%9C_Ex%D1%81el_%D0%B1%D0%B0%D0%B7%D0%B0.mp4">
+            </video>
+            <div class="tabs">
+              <button class="tab active" onclick="showTab('desc')">Описание</button>
+              <button class="tab" onclick="showTab('homework')">Домашка</button>
+            </div>
+            <div class="tab-content" id="desc">
+              <ul>
+                <li>Как будет проходить обучение</li>
+                <li>Как подключить рабочие тетради</li>
+                <li>Как зайти в ЛК селлера</li>
+                <li>Базовая информация по Excel</li>
+              </ul>
+              <p>Ссылки на группы с информацией по Wildberries:</p>
+              <a href="https://t.me/wbsellerofficial">WB Seller Official</a><br>
+              <a href="https://t.me/globalwb">Global WB</a><br>
+              <a href="https://t.me/wildberriesru_official">Wildberries RU Official</a>
+            </div>
+            <div class="tab-content" id="homework" style="display:none;">
+              <p>Домашнее задание будет добавлено позже.</p>
+            </div>
+          </div>
         </div>
-        <div class="spoiler">
-            <button class="spoiler-btn">Видео 2: Как добавить товар на Wildberries</button>
-            <div class="spoiler-content">
-                <p>Посмотрите видео, чтобы научиться добавлять товары:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                <button class="spoiler-btn">Тест 2: Добавление товаров</button>
-                <div class="spoiler-content">
-                    <p>Пройдите тест, чтобы проверить свои знания:</p>
-                    <form>
-                        <p><strong>Вопрос 1:</strong> Где можно добавить товар?</p>
-                        <label><input type="radio" name="q1" value="a"> А) В личном кабинете</label><br>
-                        <label><input type="radio" name="q1" value="b"> Б) На сайте Wildberries</label><br>
-                        <label><input type="radio" name="q1" value="c"> В) В мобильном приложении</label><br>
-    
-                        <p><strong>Вопрос 2:</strong> Какие данные нужны для добавления товара?</p>
-                        <label><input type="radio" name="q2" value="a"> А) Фотографии</label><br>
-                        <label><input type="radio" name="q2" value="b"> Б) Описание</label><br>
-                        <label><input type="radio" name="q2" value="c"> В) Все вышеперечисленное</label><br>
-    
-                        <button type="submit">Отправить</button>
-                    </form>
-              </div>
-        </div>
-        <div class="spoiler">
-            <button class="spoiler-btn">Видео 3: Как анализировать продажи</button>
-            <div class="spoiler-content">
-                <p>Посмотрите видео, чтобы научиться анализировать продажи:</p>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
-                <button class="spoiler-btn">Тест 2: Добавление товаров</button>
-                <div class="spoiler-content">
-                    <p>Пройдите тест, чтобы проверить свои знания:</p>
-                    <form>
-                        <p><strong>Вопрос 1:</strong> Где можно добавить товар?</p>
-                        <label><input type="radio" name="q1" value="a"> А) В личном кабинете</label><br>
-                        <label><input type="radio" name="q1" value="b"> Б) На сайте Wildberries</label><br>
-                        <label><input type="radio" name="q1" value="c"> В) В мобильном приложении</label><br>
-    
-                        <p><strong>Вопрос 2:</strong> Какие данные нужны для добавления товара?</p>
-                        <label><input type="radio" name="q2" value="a"> А) Фотографии</label><br>
-                        <label><input type="radio" name="q2" value="b"> Б) Описание</label><br>
-                        <label><input type="radio" name="q2" value="c"> В) Все вышеперечисленное</label><br>
-    
-                        <button type="submit">Отправить</button>
-                    </form>
-              </div>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
     <script src="script.js"></script>
-</div>
+
 </body>
 </html>
