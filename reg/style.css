@@ -40,20 +40,30 @@
   cursor: pointer;
   font-size: 16px;
 }
-
+button {
+  width: 200px;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: #009688;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  margin-right: 10px;
+}
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8fafd;
+  background-color: #fff;
   margin: 0;
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 1024px;
-}
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
 
 .logo-container {
   text-align: center;
   margin-bottom: 20px;
+  
 }
 
 .logo {
@@ -67,12 +77,15 @@ body {
   flex-direction: column;
   gap: 10px;
   align-items: self-start;
+  margin-bottom: 10px;
 }
 .lesson {
   padding: 15px;
   background: #e0f7fa;
   border-radius: 10px;
   cursor: default;
+  width: 450px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .lesson.available {

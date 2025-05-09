@@ -28,8 +28,39 @@
       }
           async function login() {
         await supabase.auth.signOut();
-        window.location.href = '/reg/index.html';
+        window.location.href = '/index.html';
       }
     </script>
 </body>
 </html>
+
+
+
+  <div class="lesson-content" id="lesson-1">
+    <button class="close-btns" onclick="closeLesson(1)">← Назад</button>
+    <h2>Урок 1: Рабочие тетради | Excel-база</h2>
+    <video controls width="50%">
+      <source
+        src="https://storage.yandexcloud.net/video-less/%D0%A3%D0%A0%D0%9E%D0%9A_1_%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B5_%D1%82%D0%B5%D1%82%D1%80%D0%B0%D0%B4%D0%B8_%EF%BD%9C_%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BA_%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82%D1%83_%EF%BD%9C_Ex%D1%81el_%D0%B1%D0%B0%D0%B7%D0%B0.mp4">
+    </video>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('desc', 1)">Описание</button>
+<button class="tab" onclick="switchTab('homework', 1)">Домашка</button>
+    </div>
+    <div class="tab-content" id="desc">
+      <ul>
+        <li>Как будет проходить обучение</li>
+        <li>Как подключить рабочие тетради</li>
+        <li>Как зайти в ЛК селлера</li>
+        <li>Базовая информация по Excel</li>
+      </ul>
+      <p>Ссылки на группы с информацией по Wildberries:</p>
+      <a href="https://t.me/wbsellerofficial">WB Seller Official</a><br>
+      <a href="https://t.me/globalwb">Global WB</a><br>
+      <a href="https://t.me/wildberriesru_official">Wildberries RU Official</a>
+    </div>
+    <div class="tab-content" id="homework" style="display:none;">
+      <p>Домашнее задание будет добавлено позже.</p>
+    </div>
+  </div>
+  <div>

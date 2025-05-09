@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Поддержка</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .dev-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .dev-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 250px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .dev-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #ddd;
+    }
+
+    .name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .role {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    .telegram-link {
+      color: #0088cc;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    .telegram-link:hover {
+      color: #005577;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Поддержка проекта</h1>
+
+  <div class="dev-container">
+
+    <!-- iOS разработчик -->
+    <div class="dev-card">
+      <img src="/reg/5cbef3e2-6a36-40de-8919-80ecdf26772b.jpg" alt="iOS dev" class="avatar">
+      <div class="name">Павлов Антон</div>
+      <div class="role">iOS разработчик</div>
+      <a href="https://t.me/@Wilwous" target="_blank" class="telegram-link">
+        <i class="fab fa-telegram-plane"></i> Написать
+      </a>
+    </div>
+
+    <!-- Web разработчик -->
+    <div class="dev-card">
+      <img src="/reg/me.jpg" alt="Web dev" class="avatar">
+      <div class="name">Логунов Дмитрий</div>
+      <div class="role">Web разработчик</div>
+      <a href="https://t.me/@el_sauer" target="_blank" class="telegram-link">
+        <i class="fab fa-telegram-plane"></i> Написать
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>
