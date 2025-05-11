@@ -235,6 +235,7 @@
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.3s ease;
+
     }
 
     .lesson-content.active {
@@ -248,13 +249,56 @@
       color: white;
     }
 
-    .tab-content {
-      display: none;
-      margin-top: 10px;
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      justify-content: center;
     }
 
+    .tab {
+      padding: 10px 20px;
+      background: #f0f0f3;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 4px 4px 10px #d1d9e6, -4px -4px 10px #ffffff;
+      font-weight: 600;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .tab:hover {
+      box-shadow: inset 4px 4px 6px #d1d9e6, inset -4px -4px 6px #ffffff;
+      background-color: #e6e8eb;
+    }
+
+    .tab.active {
+      background: #007aff;
+      color: white;
+      box-shadow: none;
+    }
+
+    .tab-content {
+        display: none;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
     .tab-content.active {
-      display: block;
+  display: block;
+}
+
+    .tab-content a {
+      color: #007aff;
+      font-weight: 500;
+      text-decoration: underline;
     }
   </style>
   <header>
@@ -282,67 +326,126 @@
     );
 
 
-   async function loadLessons() {
-      const today = new Date().toISOString().split('T')[0];
+    async function loadLessons() {
+      const today = new Date();
+
       const { data: lessons, error } = await supabase
         .from('lesson_details')
-        .select('id, title, available_from, video_url, materials_description, homework_description')
-        .order('available_from', { ascending: true });
+        .select(`
+      id,
+      lesson_id,
+      title,
+      video_url,
+      materials_description,
+      homework_description,
+      lessons (
+        available_from
+      )
+    `);
 
       if (error) {
-        console.error('Ошибка загрузки уроков:', error);
+        console.error('❌ Ошибка загрузки уроков:', error);
         return;
       }
+
+      // Сортировка по дате открытия
+      lessons.sort((a, b) => {
+        const dateA = new Date(a.lessons?.available_from || 0);
+        const dateB = new Date(b.lessons?.available_from || 0);
+        return dateA - dateB;
+      });
 
       const container = document.getElementById('lessonListContainer');
       container.innerHTML = '';
 
       lessons.forEach((lesson, index) => {
-        const isAvailable = lesson.available_from <= today;
+        const availableDateStr = lesson.lessons?.available_from;
+        const availableDate = new Date(availableDateStr);
+        const isAvailable = availableDateStr && availableDate <= today;
+
+        console.log(`📘 Урок #${index + 1}`, {
+          id: lesson.id,
+          title: lesson.title,
+          available_from: availableDateStr,
+          доступен: isAvailable,
+        });
+
         const div = document.createElement('div');
         div.className = 'lesson';
+
         div.textContent = isAvailable
           ? `Урок ${index + 1}: ${lesson.title}`
-          : `Урок ${index + 1} — откроется ${new Date(lesson.available_from).toLocaleDateString('ru-RU')}`;
+          : `Урок ${index + 1} — откроется ${availableDate.toLocaleDateString('ru-RU')}`;
+
         if (isAvailable) {
-          div.onclick = () => openLessonDynamic(lesson.id);
+          div.onclick = () => {
+            console.log('👉 Клик по уроку:', lesson.id);
+            openLessonDynamic(lesson.id);
+          };
         }
+
         container.appendChild(div);
       });
     }
 
+
+
+
+
     async function openLessonDynamic(lessonId) {
+      console.log('📥 Загружаю урок по ID:', lessonId);
+
       const { data: { session } } = await supabase.auth.getSession();
       if (!session || !session.user) {
+        console.warn('❌ Пользователь не авторизован');
         window.location.href = '/login.html';
         return;
       }
 
       const { data: lesson, error } = await supabase
         .from('lesson_details')
-        .select('id, title, available_from, video_url, materials_description, homework_description')
+        .select(`
+      id,
+      title,
+      video_url,
+      materials_description,
+      homework_description,
+      lessons (
+        available_from
+      )
+    `)
         .eq('id', lessonId)
         .single();
 
+      console.log('📦 Ответ от Supabase:', { lesson, error });
+
       if (error || !lesson) {
-        console.error('Ошибка загрузки урока:', error);
+        console.error('❌ Ошибка загрузки урока:', error);
+        return;
+      }
+
+      const availableDate = lesson.lessons?.available_from;
+      const today = new Date().toISOString().split('T')[0];
+
+      if (!availableDate || availableDate > today) {
+        alert('❗ Этот урок ещё недоступен.');
         return;
       }
 
       const content = document.getElementById('lessonContentContainer');
       content.innerHTML = `
-        <button onclick="closeLesson()">← Назад</button>
-        <h2>${lesson.title}</h2>
-        <video id="lesson-video" controls width="100%" style="max-width:600px;">
-          <source src="${lesson.video_url}" type="video/mp4">
-        </video>
-        <div class="tabs">
-          <button class="tab active" onclick="switchTab('desc')">Описание</button>
-          <button class="tab" onclick="switchTab('hw')">Домашка</button>
-        </div>
-        <div id="desc" class="tab-content active">${lesson.materials_description || 'Нет описания'}</div>
-        <div id="hw" class="tab-content">${lesson.homework_description || 'Домашка пока не добавлена'}</div>
-      `;
+    <button onclick="closeLesson()">← Назад</button>
+    <h2>${lesson.title}</h2>
+    <video id="lesson-video" controls width="100%">
+      <source src="${lesson.video_url}" type="video/mp4">
+    </video>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('desc')">Описание</button>
+      <button class="tab" onclick="switchTab('hw')">Домашка</button>
+    </div>
+    <div id="desc" class="tab-content active">${lesson.materials_description || 'Нет описания'}</div>
+    <div id="hw" class="tab-content">${lesson.homework_description || 'Домашка пока не добавлена'}</div>
+  `;
 
       document.getElementById('lessonListContainer').style.display = 'none';
       content.style.display = 'block';
@@ -359,6 +462,10 @@
         localStorage.setItem(KEY, video.currentTime);
       });
     }
+
+
+
+
 
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
@@ -558,16 +665,16 @@
       });
     });
 
-  
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
 
-  document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
-  document.getElementById(tab).classList.add('active');
-}
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
 
-</script>
+      document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
+      document.getElementById(tab).classList.add('active');
+    }
+
+  </script>
 </body>
 
 </html>
