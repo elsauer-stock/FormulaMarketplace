@@ -6,64 +6,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Обучение продажам</title>
   <style>
-    body {
-      font-family: "Century Gothic", "Segoe UI", sans-serif;
-      margin: 0 auto;
+    @font-face {
+      font-family: 'centurygothic';
+      src: url(fonts/CenturyGothic.woff);
     }
 
-    .button:hover,
-    .save-btn:hover,
-    .logout-btn:hover,
-    .tab:hover,
-    .close-btns:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
-      transition: all 0.2s ease-in-out;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+      background-color: #1e1e2f;
+      color: #cde37e;
+      margin: 0 auto;
     }
 
     .button,
     .save-btn,
     .logout-btn,
     .tab,
-    .close-btns {
+    .close-btns,
+    .btn-leson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border-radius: 10px;
+      padding: 25px 30px;
+      margin: 10px;
+      cursor: pointer;
       transition: all 0.2s ease-in-out;
+      height: 70px;
+       border: 2px solid #555;
     }
 
+    .button:nth-child(3) {
+      margin-right: 700px;
+    }
+
+    .button:hover,
+    .save-btn:hover,
+    .logout-btn:hover,
+    .tab:hover,
+    .close-btns:hover,
+    .buttons:hover,
+    .btn-leson:hover {
+      background: #3a3a55;
+      transform: scale(1.03);
+       border: 2px solid #555;
+       font-family: "Century Gothic", "Segoe UI", sans-serif;
+    }
+
+    .buttons {
+      padding: 15px 20px;
+      font-size: 16px;
+        background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border-radius: 10px;
+      padding: 25px 30px;
+      margin: 10px;
+      cursor: pointer;
+      height: 70px;
+       border: 2px solid #555;
+    }
 
     .logo-container {
       text-align: center;
       margin-bottom: 20px;
-
     }
 
     .logo {
-      width: 200px;
+      width: 300px;
       height: auto;
       margin-bottom: 10px;
     }
 
     .close-btns {
-      background: none;
-      border: none;
-      color: #007aff;
+      color: #8ab4f8;
       font-size: 16px;
-      cursor: pointer;
       margin-bottom: 10px;
+       border: 2px solid #555;
     }
 
     .tabs {
       display: flex;
-      margin-top: 15px;
-    }
-
-    .button {
-      padding: 12px 20px;
-      background: #6200ee;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 10px;
+      gap: 12px;
+      margin-top: 24px;
+      justify-content: center;
     }
 
     .modal {
@@ -72,28 +104,39 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.7);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 999;
+      animation: fadeModal 0.4s ease forwards;
     }
 
     .modal-content {
-      background: #fff;
+      background: #2a2a40;
       padding: 30px;
       border-radius: 20px;
       width: 90%;
-      max-width: 400px;
+      max-width: 450px;
       text-align: center;
-      position: relative;
-      animation: fadeIn 0.3s ease-in-out;
+      color: #cde37e;
+      animation: popIn 0.4s ease forwards;
     }
 
-    @keyframes fadeIn {
+    @keyframes fadeModal {
       from {
         opacity: 0;
-        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
       }
 
       to {
@@ -102,27 +145,56 @@
       }
     }
 
+    .tab-content {
+      display: none;
+      background: #2a2a40;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #cde37e;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tab-content a {
+      color: #cde37e;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+
     .avatar-container {
       position: relative;
       display: inline-block;
     }
 
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid #eee;
+      border: 4px solid #b36a6a;
     }
 
     .camera-icon {
       position: absolute;
       bottom: 0;
       right: 0;
-      background: white;
+      background: #3a3a55;
       border-radius: 50%;
       padding: 5px;
-      border: 1px solid #ccc;
+      border: 1px solid #666;
       cursor: pointer;
     }
 
@@ -135,181 +207,252 @@
       display: block;
       font-weight: bold;
       margin-bottom: 5px;
+      color: #cde37e;
     }
 
     .input-group input {
       width: 100%;
       padding: 10px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #555;
+      background: #1e1e2f;
+      color: #cde37e;
       font-size: 16px;
     }
 
     .logout-btn {
-      background: #f44336;
-      color: white;
-      padding: 10px;
+      font-size: 14px;
+        background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border: 2px solid #555;
+   
     }
 
     .save-btn {
-      background: #4caf50;
-      color: white;
-      padding: 10px 30px 10px 10px;
-      margin-right: 10px;
-    }
+      font-size: 14px;
+        background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      margin-right: 25px;
+     width: 135px;
 
-    input[type="file"] {
-      display: none;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 16px;
-      justify-content: space-evenly;
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
-
-    .icon {
-      font-size: 32px;
-      color: #555;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .icon.telegram:hover {
-      color: #0088cc;
-    }
-
-    .icon.wb:hover {
-      color: #800080;
-    }
-
-    .spinner {
-      margin-left: 10px;
-    }
-
-    .btn-text {
-      margin-left: 20px;
-    }
-
-    .lesson {
-      padding: 15px;
-      background: #e0f7fa;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      font-weight: bold;
-    }
-
-    .tab,
-    .button {
-      margin: 5px;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .lessons {
-      width: 540px;
-    }
-
-    .lesson-content {
-      display: none;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      width: 75%;
-      margin-left: 150px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-
-    }
-
-    .lesson-content.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .tab.active {
-      background: #007aff;
-      color: white;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-      justify-content: center;
     }
 
     .tab {
       padding: 10px 20px;
-      background: #f0f0f3;
       border-radius: 12px;
-      border: none;
-      box-shadow: 4px 4px 10px #d1d9e6, -4px -4px 10px #ffffff;
+      background: #2a2a40;
+      box-shadow: inset 2px 2px 5px #1e1e2f, inset -2px -2px 5px #3a3a55;
+       border: 2px solid #555;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      box-shadow: none;
+    }
+
+    .btn-leson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      border-radius: 10px;
+      font-weight: bold;
+      color: #cde37e;
+      transition: background 0.2s ease;
+    }
+
+    #profilesContainer {
+      margin-top: 10px;
+      height: 130px;
+      max-width: 381px;
+      margin-left: 577px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      padding: 20px 17px;
+      border-radius: 20px;
+       border: 2px solid #555;
+    }
+
+
+    .profile-card {
+      padding: 3px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: 13px;
+      transform: translateY(-20px);
+      animation: fadeInSlide 0.8s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    .avatars {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #555;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-info p:nth-child(4) {
+      display: none;
+    }
+
+    .header-flex {
+      display: flex;
+      align-items: flex-start;
+
+      gap: 15px;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    .video-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* центрирование по вертикали */
+    }
+
+    .modern-title {
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+      font-size: 45px;
       font-weight: 600;
-      color: #333;
+      color: #cde37e;
+      /* светлый текст для тёмного фона */
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      padding: 20px 40px;
+      border-radius: 20px;
+      text-align: center;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      margin: 20px auto;
+      width: fit-content;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInSlide 0.8s ease-out forwards;
+      animation-delay: 0.3s;
+       border: 2px solid #555;
+    }
+
+    .modern-title:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #2c2c2c, #3a3a3a);
+    }
+
+    @keyframes fadeInSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lessons,
+    #lessonContentContainer {
+      background: #2a2a40;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1024px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      animation: fadeInBlock 0.5s ease-in-out;
+       border: 2px solid #555;
+    }
+
+    .lesson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+       border: 2px solid #555;
+    }
+
+    @keyframes fadeInBlock {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lesson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 960px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      animation: fadeInBlock 0.5s ease-in-out;
+      font-size: 15px;
+      font-weight: 600;
+      color: #cde37e;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
     }
 
-    .tab:hover {
-      box-shadow: inset 4px 4px 6px #d1d9e6, inset -4px -4px 6px #ffffff;
-      background-color: #e6e8eb;
+    .lesson:hover {
+      transform: scale(1.05);
+      background: #3a3a55;
+      transform: scale(1.03);
     }
 
-    .tab.active {
-      background: #007aff;
-      color: white;
-      box-shadow: none;
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+      justify-content: center;
+      margin-right: 250px;
     }
 
-    .tab-content {
-        display: none;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-      font-size: 16px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      word-break: break-word;
+    .social-icon img {
+      width: 40px;
+      margin-right: 15px;
+      height: 40px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    .tab-content.active {
-  display: block;
-}
 
-    .tab-content a {
-      color: #007aff;
-      font-weight: 500;
-      text-decoration: underline;
+    .social-icon:hover img {
+      transform: scale(1.1);
+      opacity: 0.85;
     }
   </style>
   <header>
-    <button class="button" onclick="openSettings()">Открыть настройки</button>
-    <a href="broadcast.html" class="button">Эфиры</a>
-    <a href="support.html" class="button">Поддержка</a>
+    <div class="header-flex">
+      <button class="buttons" onclick="openSettings()">Настройки</button>
+      <a href="broadcast.html" class="button">Эфиры</a>
+      <a href="support.html" class="button">Поддержка</a>
+      <div id="profilesContainer">
+        <div id="profilesList"></div>
+        <div class="social-links">
+          <a href="https://t.me/+yXTLrorTZdM1ZWVi" target="_blank" class="social-icon">
+            <img src="telegram.svg" alt="Telegram" />
+          </a>
+          <a href="https://seller.wildberries.ru" target="_blank" class="social-icon">
+            <img src="wildberries.svg" alt="Wildberries" />
+          </a>
+        </div>
+      </div>
+
+    </div>
     <div id="settingsModalContainer"></div>
+    </div>
     <div class="logo-container">
       <img src="/logo.png" alt="Логотип" class="logo">
-      <h1>Обучение продажам на Wildberries</h1>
+      <h1 class="modern-title">Formula Marketplace</h1>
     </div>
+
   </header>
 </head>
 
@@ -324,11 +467,8 @@
       'https://mnsluarozhgjzxzyceyc.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
     );
-
-
     async function loadLessons() {
       const today = new Date();
-
       const { data: lessons, error } = await supabase
         .from('lesson_details')
         .select(`
@@ -401,6 +541,7 @@
         window.location.href = '/login.html';
         return;
       }
+      
 
       const { data: lesson, error } = await supabase
         .from('lesson_details')
@@ -434,11 +575,13 @@
 
       const content = document.getElementById('lessonContentContainer');
       content.innerHTML = `
-    <button onclick="closeLesson()">← Назад</button>
+    <button class="btn-leson" onclick="closeLesson()">← Назад</button>
     <h2>${lesson.title}</h2>
-    <video id="lesson-video" controls width="100%">
-      <source src="${lesson.video_url}" type="video/mp4">
-    </video>
+ <div class="video-wrapper">
+  <video id="lesson-video" controls width="75%">
+    <source src="${lesson.video_url}" type="video/mp4">
+  </video>
+</div>
     <div class="tabs">
       <button class="tab active" onclick="switchTab('desc')">Описание</button>
       <button class="tab" onclick="switchTab('hw')">Домашка</button>
@@ -498,7 +641,6 @@
         .from('profiles')
         .select('id, name, phone, email, avatar_url')
         .eq('id', userId)
-        .single();
 
       if (error) return console.error(error);
       console.log('Профиль:', data);
@@ -513,7 +655,7 @@
           <div class="modal">
             <div class="modal-content">
               <div class="close-btn" onclick="closeModal()">×</div>
-              <h2>Настройки</h2>
+              <h2>Профиль</h2>
 
               <div class="avatar-container">
                 <img src="" alt="" class="avatar" id="userAvatar">
@@ -534,17 +676,6 @@
               <div class="input-group">
                 <label>Email</label>
                 <input type="email" id="email" value="">
-              </div>
-
-              <div class="social-icons">
-                <a href="https://t.me/your_channel" target="_blank" class="icon telegram">
-                  <i class="fab fa-telegram-plane"></i>
-                </a>
-                <a href="https://www.wb.ru" target="_blank" class="icon wb">
-                  <i class="fas fa-globe"></i>
-                </a>
-              </div>
-
               <button class="save-btn" id="saveBtn">
                 <span class="btn-text">Сохранить</span>
                 <span class="spinner" style="display:none;">⏳</span>
@@ -567,25 +698,33 @@
     let userId = null;
 
     async function loadProfile() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return alert("Вы не авторизованы");
+      const {
+        data: { user },
+        error: authError
+      } = await supabase.auth.getUser();
 
-      userId = session.user.id;
-
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('id, title, available_from, video_url, materials_description, homework_description')
-        .eq('id', userId)
-        .single();
-
-      if (error) return console.error(error);
-
-      document.getElementById('name').value = data.name || '';
-      document.getElementById('phone').value = data.phone || '';
-      document.getElementById('email').value = data.email || '';
-      if (data.avatar_url) {
-        document.getElementById('userAvatar').src = data.avatar_url;
+      if (authError || !user) {
+        alert("Ошибка авторизации.");
+        return;
       }
+
+      userId = user.id;
+
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('id, name, phone, email, avatar_url')
+        .eq('id', userId)
+
+
+      if (profileError) {
+        console.error('Ошибка при загрузке профиля:', profileError.message);
+        return;
+      }
+
+      document.getElementById('name').value = profile.name || '';
+      document.getElementById('phone').value = profile.phone || '';
+      document.getElementById('email').value = profile.email || '';
+      document.getElementById('userAvatar').src = profile.avatar_url || 'https://via.placeholder.com/120';
     }
 
     async function saveProfile() {
@@ -596,12 +735,24 @@
       btnText.textContent = "Сохраняю…";
       spinner.style.display = "inline";
 
+      const {
+        data: { user },
+        error: authError
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        alert("Ошибка авторизации. Повторите вход.");
+        btnText.textContent = "Сохранить";
+        spinner.style.display = "none";
+        return;
+      }
+
       const updates = {
-        id: userId,
+        id: user.id, // 💥 ОБЯЗАТЕЛЬНО: ID из auth
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         email: document.getElementById('email').value,
-        updated_at: new Date(),
+        updated_at: new Date().toISOString()
       };
 
       const { error } = await supabase.from('profiles').upsert(updates);
@@ -612,9 +763,10 @@
       if (error) {
         alert('Ошибка при сохранении: ' + error.message);
       } else {
-        alert('Профиль сохранён!');
+        alert('Профиль успешно сохранён!');
       }
     }
+
 
     async function handleAvatarUpload(e) {
       const file = e.target.files[0];
@@ -673,6 +825,69 @@
       document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
       document.getElementById(tab).classList.add('active');
     }
+
+    async function loadProfile() {
+      const {
+        data: { user },
+        error: authError
+      } = await supabase.auth.getUser();
+
+      // Обработка ошибки получения пользователя
+      if (authError || !user) {
+        console.warn('Пользователь не авторизован. Перенаправление на страницу входа.');
+        // Перенаправление, если нужно (раскомментируй строку ниже)
+        // window.location.href = '/login.html';
+        document.getElementById('profilesList').innerHTML = `
+      <p>Вы не авторизованы. <a href="/login.html">Войти</a></p>
+    `;
+        return;
+      }
+
+      // Получение профиля текущего пользователя
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (profileError) {
+        console.error('Ошибка при загрузке профиля:', profileError.message);
+        document.getElementById('profilesList').innerHTML = `
+      <p>Ошибка при загрузке профиля. Попробуйте позже.</p>
+    `;
+        return;
+      }
+
+      // Отображение профиля
+      const listContainer = document.getElementById('profilesList');
+      listContainer.innerHTML = '';
+
+      const profileCard = document.createElement('div');
+      profileCard.className = 'profile-card';
+
+      const avatar = document.createElement('img');
+      avatar.className = 'avatar';
+      avatar.src = profile.avatar_url || 'https://via.placeholder.com/60';
+      avatar.alt = 'Avatar';
+
+      const info = document.createElement('div');
+      info.className = 'profile-info';
+      info.innerHTML = `
+    <p><strong>Имя:</strong> ${profile.name ?? '–'}</p>
+    <p><strong>Email:</strong> ${profile.email ?? '–'}</p>
+    <p><strong>Телефон:</strong> ${profile.phone ?? '–'}</p>
+    <p><strong>Обновлено:</strong> ${new Date(profile.updated_at).toLocaleString() ?? '–'}</p>
+  `;
+
+      profileCard.appendChild(avatar);
+      profileCard.appendChild(info);
+      listContainer.appendChild(profileCard);
+    }
+
+    loadProfile();
+
+
+
 
   </script>
 </body>

@@ -18,7 +18,7 @@
     padding: 30px;
     border-radius: 20px;
     width: 90%;
-    max-width: 400px;
+    max-width: 440px;
     text-align: center;
     position: relative;
     animation: fadeIn 0.3s ease-in-out;
@@ -134,14 +134,7 @@
 <div class="modal">
   <div class="modal-content">
     <div class="close-btn" onclick="closeModal()">×</div>
-    <h2>Настройки</h2>
-
-    <div class="avatar-container">
-      <img src="" alt="" class="avatar" id="userAvatar">
-      <label for="avatarInput" class="camera-icon">📷</label>
-      <input type="file" id="avatarInput" accept="image/*">
-    </div>
-
+    <h2>Профиль</h2>
     <div class="input-group">
       <label>Имя</label>
       <input type="text" id="name" value="">
@@ -158,14 +151,7 @@
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<div class="social-icons">
-  <a href="https://t.me/your_channel" target="_blank" class="icon telegram">
-    <i class="fab fa-telegram-plane"></i>
-  </a>
-  <a href="https://www.wb.ru" target="_blank" class="icon wb">
-    <i class="fas fa-globe"></i>
-  </a>
-</div><button class="btn save-btn" id="saveBtn">
+<button class="btn save-btn" id="saveBtn">
   <span class="btn-text">Сохранить</span>
   <span class="spinner" style="display:none;">⏳</span>
 </button>
@@ -181,48 +167,60 @@
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
   );
 
-  const avatarInput = document.getElementById('avatarInput');
-  const avatarImg = document.getElementById('userAvatar');
-  const nameInput = document.getElementById('name');
-  const phoneInput = document.getElementById('phone');
-  const emailInput = document.getElementById('email');
-
-  let userId = null;
-
+ 
   async function loadProfile() {
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-    if (!session) return alert("Вы не авторизованы");
-
-    userId = session.user.id;
-
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    if (data) {
-      nameInput.value = data.name || '';
-      phoneInput.value = data.phone || '';
-      emailInput.value = data.email || '';
-      if (data.avatar_url) {
-        avatarImg.src = data.avatar_url;
-      }
-    }
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (!session || !session.user) {
+    alert("Вы не авторизованы");
+    return;
   }
 
-async function saveProfile() {
-  const saveBtn = document.getElementById('saveBtn');
-  const btnText = saveBtn.querySelector('.btn-text');
-  const spinner = saveBtn.querySelector('.spinner');
+  const userId = session.user.id;
 
-  btnText.textContent = "Сохраняю…";
-  spinner.style.display = "inline";
+  const profile = await loadProfileData();
+if (!profile) return;
+
+userId = profile.id;
+document.getElementById('name').value = profile.name || '';
+document.getElementById('phone').value = profile.phone || '';
+document.getElementById('email').value = profile.email || '';
+if (profile.avatar_url) {
+  document.getElementById('userAvatar').src = profile.avatar_url;
+}
+
+
+
+  if (loadError && loadError.code !== 'PGRST116') {
+    console.error('Ошибка загрузки профиля:', loadError.message);
+    return;
+  }
+
+  if (profile) {
+    nameInput.value = profile.name || '';
+    phoneInput.value = profile.phone || '';
+    emailInput.value = profile.email || '';
+    if (profile.avatar_url) {
+      avatarImg.src = profile.avatar_url + `?t=${Date.now()}`;
+    }
+  }
+}
+
+async function saveProfile() {
+const { data: { user } } = await supabase.auth.getUser();
+
+if (!user) {
+  console.error('Пользователь не найден');
+  return;
+}
+
+const { data, error } = await supabase
+  .from('profiles')
+  .update({ name: 'Новое имя' })
+  .eq('id', user.id);
+  }
+
+  const userId = session.user.id;
+  console.log("✅ Сохраняем для ID:", userId);
 
   const updates = {
     id: userId,
@@ -230,43 +228,43 @@ async function saveProfile() {
     phone: phoneInput.value,
     email: emailInput.value,
     updated_at: new Date(),
+    avatar_url: avatarImg.src.split('?')[0] // убираем кеш-хвост
   };
 
-  const { error } = await supabase.from('profiles').upsert(updates);
+  console.log("📤 Данные для upsert:", updates);
 
-  spinner.style.display = "none";
-  btnText.textContent = "Сохранить";
+  const { error: upsertError } = await supabase
+    .from('profiles')
+    .upsert(updates, { onConflict: 'id' });
 
-  if (error) {
-    alert('Ошибка при сохранении профиля: ' + error.message);
+  if (upsertError) {
+    alert('❌ Ошибка при сохранении: ' + upsertError.message);
   } else {
-    alert('Профиль обновлён!');
+    alert('✅ Профиль сохранён!');
   }
-}
+
 
 
  avatarInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
-  // Показываем превью до загрузки
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    avatarImg.src = event.target.result;
-  };
-  reader.readAsDataURL(file);
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return;
+  const userId = session.user.id;
 
   const fileExt = file.name.split('.').pop();
   const filePath = `${userId}.${fileExt}`;
 
+  // Удалить старую аватарку, если была
+  await supabase.storage.from('avatars').remove([filePath]);
+
   const { error: uploadError } = await supabase.storage
     .from('avatars')
-    .upload(filePath, file, {
-      upsert: true,
-    });
+    .upload(filePath, file);
 
   if (uploadError) {
-    alert('Ошибка загрузки аватарки');
+    alert('Ошибка загрузки аватарки: ' + uploadError.message);
     return;
   }
 
@@ -274,18 +272,13 @@ async function saveProfile() {
     .from('avatars')
     .getPublicUrl(filePath);
 
-  const publicUrl = urlData.publicUrl;
-
-  // Устанавливаем финальную ссылку (на загруженное изображение, а не превью)
-  avatarImg.src = publicUrl;
+  avatarImg.src = urlData.publicUrl + `?t=${Date.now()}`;
 
   await supabase
     .from('profiles')
-    .update({ avatar_url: publicUrl })
+    .update({ avatar_url: urlData.publicUrl })
     .eq('id', userId);
 });
-document.getElementById('saveBtn').addEventListener('click', saveProfile);
-loadProfile();
 
   async function logout() {
     await supabase.auth.signOut();
@@ -294,7 +287,10 @@ loadProfile();
   }
 
   function closeModal() {
-    document.querySelector('.modal').remove();
+    document.querySelector('.modal')?.remove();
   }
+
+  saveBtn.addEventListener('click', saveProfile);
+  loadProfile();
 
 </script>
