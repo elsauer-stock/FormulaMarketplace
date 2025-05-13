@@ -33,12 +33,12 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
       color: #cde37e;
       border-radius: 10px;
-      padding: 25px 30px;
+      padding: 16px 30px;
       margin: 10px;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
-      height: 70px;
       border: 2px solid #555;
+      text-align: center;
     }
 
     .close-btn {
@@ -47,7 +47,7 @@
     }
 
     .button:nth-child(3) {
-      margin-right: 700px;
+      margin-right: 180px;
     }
 
     .button:hover,
@@ -56,7 +56,8 @@
     .tab:hover,
     .close-btns:hover,
     .buttons:hover,
-    .btn-leson:hover {
+    .btn-leson:hover,
+    .modal-trigger:hover {
       background: #3a3a55;
       transform: scale(1.03);
       border: 2px solid #555;
@@ -70,11 +71,12 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
       color: #cde37e;
       border-radius: 10px;
-      padding: 25px 30px;
+      padding: 16px 30px;
       margin: 10px;
       cursor: pointer;
-      height: 70px;
       border: 2px solid #555;
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+
     }
 
     .logo-container {
@@ -103,30 +105,6 @@
       cursor: pointer;
     }
 
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      animation: fadeModal 0.4s ease forwards;
-    }
-
-    .modal-content {
-      background: #2a2a40;
-      padding: 30px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 450px;
-      text-align: center;
-      color: #cde37e;
-      animation: popIn 0.4s ease forwards;
-    }
 
     @keyframes fadeModal {
       from {
@@ -165,6 +143,7 @@
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.3s ease, transform 0.3s ease;
+      text-align: start;
     }
 
     .tab-content.active {
@@ -177,20 +156,6 @@
       color: #cde37e;
       font-weight: 500;
       text-decoration: underline;
-    }
-
-    .avatar-container {
-      position: relative;
-      display: inline-block;
-
-    }
-
-    .avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #b36a6a;
     }
 
     .input-group {
@@ -255,50 +220,15 @@
       font-weight: bold;
       color: #cde37e;
       transition: background 0.2s ease;
-    }
-
-    #profilesContainer {
-      margin-top: 10px;
-      height: 130px;
-      max-width: 381px;
-      margin-left: 577px;
-      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      padding: 20px 17px;
-      border-radius: 20px;
+      display: block;
+      /* чтобы заняла всю ширину по контексту */
+      margin: 10px 0;
+      /* вертикальный отступ */
+      text-align: left;
+      /* текст выровнен влево */
+      padding: 10px 16px;
+      /* чуть больше отступов для читаемости */
       border: 2px solid #555;
-    }
-
-
-    .profile-card {
-      padding: 3px;
-      margin-bottom: 16px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-left: 13px;
-      transform: translateY(-20px);
-      animation: fadeInSlide 0.8s ease-out forwards;
-      animation-delay: 0.3s;
-    }
-
-    .avatars {
-      margin-top: 10px;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #b36a6a;
-      margin-left: 30px;
-    }
-
-    .profile-info {
-      flex: 1;
-    }
-
-    .profile-info p:nth-child(4) {
-      display: none;
     }
 
     .header-flex {
@@ -405,207 +335,452 @@
       transform: scale(1.03);
     }
 
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 40px;
-      justify-content: center;
-      margin-right: 250px;
+    .button,
+    .save-btn,
+    .logout-btn,
+    .buttons,
+    .btn-leson {
+      padding: 15px 20px;
+      height: auto;
+      font-size: 14px;
     }
 
-    .social-icon img {
-      width: 40px;
-      margin-right: 15px;
-      height: 40px;
+    .tab-content {
+      font-size: 14px;
+    }
+
+    .social-links {
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0 0 0;
+    }
+
+    .video-wrapper {
+      flex-direction: column;
+      padding: 0 10px;
+    }
+
+    video {
+      width: 100% !important;
+    }
+
+    /*  */
+
+
+    @font-face {
+      font-family: 'centurygothic';
+      src: url(fonts/CenturyGothic.woff);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+      background-color: #1e1e2f;
+      color: #cde37e;
+      margin: 0 auto;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .profile-info {
+      background: #2c2c3f;
+      color: #cde37e;
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px solid #555;
+      width: 300px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      display: flex;
+      /* <-- Flex-контейнер */
+      align-items: center;
+      /* вертикальное выравнивание */
+      gap: 16px;
+      /* отступ между аватаром и текстом */
+    }
+
+    .profile-info .avatar {
+      width: 80px;
+      /* можно чуть уменьшить */
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .profile-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #2a2a40;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+      width: 340px;
+      color: #cde37e;
+      position: relative;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .modal-content label {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      background: #1e1e2f;
+      color: #cde37e;
+      border: 1px solid #555;
+      border-radius: 8px;
+    }
+
+    .modal-content button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      color: #cde37e;
+      border: 2px solid #555;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+     .close {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      color: #cde37e;
+      border: 2px solid #555;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-left: 70px;
+    }
+
+    .modal-content button:hover {
+      background: #3a3a55;
+    }
+
+    .modal-trigger {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border: 2px solid #555;
+      border-radius: 10px;
+      padding: 16px 20px;
+      cursor: pointer;
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+    }
+
+    .training-channel-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 20px;
+      align-items: end;
+      margin-right: 20px;
+    }
+
+    .channel-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #cde37e;
+      font-size: 14px;
+    }
+
+    .channel-link img {
+      width: 30px;
+      height: 30px;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
-    .social-icon:hover img {
+    .channel-link a:hover img {
       transform: scale(1.1);
       opacity: 0.85;
     }
 
-    .camera-icon {
+    .avatar-preview {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px dashed #555;
       cursor: pointer;
-      display: inline-block;
-      margin-left: 10px;
-      font-size: 20px;
+      margin-top: 10px;
+      transition: transform 0.2s ease;
+      margin-left: 100px;
     }
-    @media (max-width: 768px) {
-  .avatar,
-  .avatars {
-    width: 60px;
-    height: 60px;
-  }
 
-  .modal-content {
-    width: 95%;
-    padding: 20px;
-  }
+    .avatar-preview:hover {
+      transform: scale(1.05);
+    }
 
-  .modern-title {
-    font-size: 28px;
-    padding: 10px 20px;
-  }
+    .logout-btn {
+      background: transparent;
+      border: none;
+      color: #cde37e;
+      font-size: 14px;
+      position: absolute;
+      top: -11px;
+      right: -6px;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: opacity 0.2s ease;
+    }
 
-  .button,
-  .save-btn,
-  .logout-btn,
-  .buttons,
-  .btn-leson {
-    padding: 15px 20px;
-    height: auto;
-    font-size: 14px;
-  }
+    .logout-btn:hover {
+      opacity: 0.7;
+    }
 
-  .tab-content {
-    font-size: 14px;
-  }
-
-  #profilesContainer {
-    max-width: 100%;
-    margin: 10px auto;
-    height: auto;
-  }
-
-  .social-links {
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0 0 0;
-  }
-
-  .video-wrapper {
-    flex-direction: column;
-    padding: 0 10px;
-  }
-
-  video {
-    width: 100% !important;
-  }
-
-  .header-flex {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
+    /*  */
   </style>
-  <header>
-    <div class="header-flex">
-      <button class="buttons" onclick="openSettings()">Настройки</button>
-      <a href="broadcast.html" class="button">Эфиры</a>
-      <a href="support.html" class="button">Поддержка</a>
-      <div id="profilesContainer">
-        <div id="profilesList"></div>
-        <div class="social-links">
-          <a href="https://t.me/+yXTLrorTZdM1ZWVi" target="_blank" class="social-icon">
-            <img src="telegram.svg" alt="Telegram" />
-          </a>
-          <a href="https://seller.wildberries.ru" target="_blank" class="social-icon">
-            <img src="wildberries.svg" alt="Wildberries" />
-          </a>
-        </div>
-      </div>
-
-    </div>
-    <div id="settingsModalContainer"></div>
-    </div>
-    <div class="logo-container">
-      <img src="logo.png" alt="Логотип" class="logo">
-      <h1 class="modern-title">Formula Marketplace</h1>
-    </div>
-
-  </header>
 </head>
 
 <body>
+  <div class="header-container">
+    <div>
+      <button class="modal-trigger" onclick="openModal()">Профиль</button>
+      <a href="broadcatss.html" class="button">Эфиры</a>
+      <a href="support.html" class="button">Поддержка</a>
+    </div>
 
-  <div class="lessons" id="lessonListContainer"></div>
-  <div id="lessonContentContainer" style="display:none;"></div>
+    <div id="profileInfo" class="profile-info">
+      <img id="avatarDisplay" src="" alt="Аватар" class="avatar" />
+      <div class="profile-text">
+        <p><strong>Имя:</strong> <span id="nameDisplay"></span></p>
+        <p><strong>Телефон:</strong> <span id="phoneDisplay"></span></p>
+        <p><strong>Solcoin:</strong> <span id="coinsDisplay"></span></p>
+      </div>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
-  <script>
-    const supabase = window.supabase.createClient(
-      'https://mnsluarozhgjzxzyceyc.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
-    );
-    async function loadLessons() {
-      const today = new Date();
+    <div class="modal" id="editModal">
+      <div class="modal-content">
+        <button class="logout-btn" onclick="logout()">⎋ Выйти</button>
 
-      const { data: lessons, error } = await supabase
-        .from('lessons')
-        .select('id, available_from');
+        <h2>Профиль</h2>
 
-      if (error) {
-        console.error('❌ Ошибка загрузки уроков:', error);
-        return;
+        <label>Аватар:</label>
+        <img id="avatarPreview" class="avatar-preview" src="https://via.placeholder.com/100" alt="Аватар"
+          onclick="triggerAvatarUpload()" />
+        <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="previewAvatar(event)" />
+
+        <label for="nameInput">Имя:</label>
+        <input type="text" id="nameInput" />
+
+        <label for="phoneInput">Телефон:</label>
+        <input type="text" id="phoneInput" />
+
+        <button onclick="saveProfile()">Сохранить</button>
+        <button class="close" onclick="closeModal()">Закрыть</button>
+      </div>
+    </div>
+  </div>
+  <div class="training-channel-vertical">
+    <div class="channel-link">
+      <span>Канал обучения</span>
+      <a href="https://t.me/+yXTLrorTZdM1ZWVi" target="_blank">
+        <img src="telegram.svg" alt="Telegram" />
+      </a>
+    </div>
+    <div class="channel-link">
+      <span>Личный кабинет Селлера</span>
+      <a href="https://seller.wildberries.ru" target="_blank">
+        <img src="wildberries.svg" alt="Wildberries" />
+      </a>
+    </div>
+  </div>
+
+  <div class="logo-container">
+    <img src="/logo.png" alt="Логотип" class="logo">
+    <h1 class="modern-title">Formula Marketplace</h1>
+    <div class="lessons" id="lessonListContainer"></div>
+    <div id="lessonContentContainer" style="display:none;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
+    <script>
+      const supabase = window.supabase.createClient(
+        'https://mnsluarozhgjzxzyceyc.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
+      );
+
+      async function loadProfile() {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (error) return alert('Ошибка загрузки профиля');
+
+        document.getElementById('avatarDisplay').src = data.avatar || 'https://via.placeholder.com/100';
+        document.getElementById('nameDisplay').innerText = data.name || '-';
+        document.getElementById('phoneDisplay').innerText = data.phoneNumber || '-';
+        document.getElementById('coinsDisplay').innerText = data.coins ?? '0';
       }
 
-      lessons.sort((a, b) => new Date(a.available_from) - new Date(b.available_from));
+      async function openModal() {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-      const container = document.getElementById('lessonListContainer');
-      container.innerHTML = '';
+        if (error) return alert('Ошибка загрузки профиля');
 
-      for (const [index, lesson] of lessons.entries()) {
-        const availableDate = new Date(lesson.available_from);
-        const isAvailable = availableDate <= today;
+        document.getElementById('nameInput').value = data.name || '';
+        document.getElementById('phoneInput').value = data.phoneNumber || '';
+        document.getElementById('editModal').style.display = 'flex';
+      }
 
-        const div = document.createElement('div');
-        div.className = 'lesson';
-        div.style.marginBottom = '20px';
+      function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+      }
 
-        if (isAvailable) {
-          // Подгружаем title из lesson_details (основной и единственный заголовок)
-          const { data: detail, error: detailError } = await supabase
-            .from('lesson_details')
-            .select('title')
-            .eq('lesson_id', lesson.id)
-            .single();
+      async function saveProfile() {
+        const name = document.getElementById('nameInput').value;
+        const phoneNumber = document.getElementById('phoneInput').value;
+        const avatarFile = document.getElementById('avatarInput').files[0];
 
-          const detailTitle = (!detailError && detail) ? detail.title : `Урок ${index + 1}`;
+        const { data: { user } } = await supabase.auth.getUser();
 
-          // Проверка: начинается ли detailTitle с "Урок"
-          const startsWithUrok = detailTitle.toLowerCase().startsWith('урок');
+        let avatarUrl = null;
+        if (avatarFile) {
+          const { data: uploadData, error: uploadError } = await supabase
+            .storage
+            .from('avatars')
+            .upload(`${user.id}/${avatarFile.name}`, avatarFile, {
+              upsert: true
+            });
 
-          div.innerHTML = `
+          if (uploadError) return alert('Ошибка загрузки аватара');
+          avatarUrl = supabase.storage.from('avatars').getPublicUrl(uploadData.path).data.publicUrl;
+        }
+
+        const updates = {
+          name,
+          phoneNumber,
+          ...(avatarUrl && { avatar: avatarUrl })
+        };
+
+        const { error } = await supabase
+          .from('users')
+          .update(updates)
+          .eq('id', user.id);
+
+        if (error) return alert('Ошибка сохранения');
+
+        await loadProfile();
+        closeModal();
+      }
+
+      loadProfile();
+      // 
+      async function loadLessons() {
+        const today = new Date();
+
+        const { data: lessons, error } = await supabase
+          .from('lessons')
+          .select('id, available_from');
+
+        if (error) {
+          console.error('❌ Ошибка загрузки уроков:', error);
+          return;
+        }
+
+        lessons.sort((a, b) => new Date(a.available_from) - new Date(b.available_from));
+
+        const container = document.getElementById('lessonListContainer');
+        container.innerHTML = '';
+
+        for (const [index, lesson] of lessons.entries()) {
+          const availableDate = new Date(lesson.available_from);
+          const isAvailable = availableDate <= today;
+
+          const div = document.createElement('div');
+          div.className = 'lesson';
+          div.style.marginBottom = '20px';
+
+          if (isAvailable) {
+            // Подгружаем title из lesson_details (основной и единственный заголовок)
+            const { data: detail, error: detailError } = await supabase
+              .from('lesson_details')
+              .select('title')
+              .eq('lesson_id', lesson.id)
+              .single();
+
+            const detailTitle = (!detailError && detail) ? detail.title : `Урок ${index + 1}`;
+
+            // Проверка: начинается ли detailTitle с "Урок"
+            const startsWithUrok = detailTitle.toLowerCase().startsWith('урок');
+
+            div.innerHTML = `
   <div style="cursor:pointer;" onclick="openLessonDynamic(${lesson.id})">
     ${startsWithUrok ? '' : `<strong>Урок ${index + 1}</strong>`}
     <p>${detailTitle}</p>
   </div>
 `;
-        } else {
-          div.textContent = `Урок ${index + 1} — откроется ${availableDate.toLocaleDateString('ru-RU')}`;
+          } else {
+            div.textContent = `Урок ${index + 1} — откроется ${availableDate.toLocaleDateString('ru-RU')}`;
+          }
+
+          container.appendChild(div);
+        }
+      }
+      async function openLessonDynamic(lessonId) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session || !session.user) {
+          window.location.href = '/index.html';
+          return;
         }
 
-        container.appendChild(div);
-      }
-    }
+        const { data: lessonDetail, error } = await supabase
+          .from('lesson_details')
+          .select('*')
+          .eq('lesson_id', lessonId)
+          .single(); // предполагается, что на каждый lesson.id ровно один detail
 
+        if (error || !lessonDetail) {
+          console.error('❌ Ошибка загрузки деталей урока:', error);
+          return;
+        }
 
-
-
-
-
-    async function openLessonDynamic(lessonId) {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session || !session.user) {
-        window.location.href = '/index.html';
-        return;
-      }
-
-      const { data: lessonDetail, error } = await supabase
-        .from('lesson_details')
-        .select('*')
-        .eq('lesson_id', lessonId)
-        .single(); // предполагается, что на каждый lesson.id ровно один detail
-
-      if (error || !lessonDetail) {
-        console.error('❌ Ошибка загрузки деталей урока:', error);
-        return;
-      }
-
-      const content = document.getElementById('lessonContentContainer');
-      content.innerHTML = `
+        const content = document.getElementById('lessonContentContainer');
+        content.innerHTML = `
     <button class="btn-leson" onclick="closeLesson()">← Назад</button>
     <h2>${lessonDetail.title}</h2>
     <div class="video-wrapper">
@@ -621,307 +796,64 @@
     <div id="hw" class="tab-content">${lessonDetail.homework_description || 'Домашка пока не добавлена'}</div>
   `;
 
-      document.getElementById('lessonListContainer').style.display = 'none';
-      content.style.display = 'block';
+        document.getElementById('lessonListContainer').style.display = 'none';
+        content.style.display = 'block';
 
-      const video = document.getElementById('lesson-video');
-      const KEY = `lesson-${lessonId}-time`;
+        const video = document.getElementById('lesson-video');
+        const KEY = `lesson-${lessonId}-time`;
 
-      video.addEventListener('loadedmetadata', () => {
-        const t = localStorage.getItem(KEY);
-        if (t) video.currentTime = parseFloat(t);
-      });
+        video.addEventListener('loadedmetadata', () => {
+          const t = localStorage.getItem(KEY);
+          if (t) video.currentTime = parseFloat(t);
+        });
 
-      video.addEventListener('timeupdate', () => {
-        localStorage.setItem(KEY, video.currentTime);
-      });
-    }
-
-
-
-
-
-
-    function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
-
-      document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
-      document.getElementById(tab).classList.add('active');
-    }
-
-    function closeLesson() {
-      document.getElementById('lessonContentContainer').style.display = 'none';
-      document.getElementById('lessonListContainer').style.display = 'block';
-    }
-
-    (async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        window.location.href = '/index.html';
-        return;
+        video.addEventListener('timeupdate', () => {
+          localStorage.setItem(KEY, video.currentTime);
+        });
       }
-      await loadLessons();
-    })();
+      function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
 
-    async function loadProfile() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return alert("Вы не авторизованы");
-
-      const userId = session.user.id;
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('id, name, phone, email, avatar_url')
-        .eq('id', userId)
-
-      if (error) return console.error(error);
-      console.log('Профиль:', data);
-    }
-
-
-
-
-
-    function openSettings() {
-      const modalHTML = `
-          <div class="modal">
-            <div class="modal-content">
-              <div class="close-btn" onclick="closeModal()">X</div>
-              <h2>Профиль</h2>
-
-              <div class="avatar-container">
-  <img src="default-avatar.png" alt="" class="avatars" id="userAvatars">
-  <label for="avatarInput" class="camera-icon">📷</label>
-  <input type="file" id="avatarInput" accept="image/*" style="display: none;">
-</div>
-
-              <div class="input-group">
-                <label>Имя</label>
-                <input type="text" id="name" value="">
-              </div>
-
-              <div class="input-group">
-                <label>Номер телефона</label>
-                <input type="tel" id="phone" value="">
-              </div>
-
-              <div class="input-group">
-                <label>Email</label>
-                <input type="email" id="email" value="">
-              <button class="save-btn" id="saveBtn">
-                <span class="btn-text">Сохранить</span>
-                <span class="spinner" style="display:none;">⏳</span>
-              </button>
-              <button class="logout-btn" onclick="logout()">Выйти из аккаунта</button>
-            </div>
-          </div>
-        `;
-      document.getElementById('settingsModalContainer').innerHTML = modalHTML;
-
-      document.getElementById('saveBtn').addEventListener('click', saveProfile);
-      document.getElementById('avatarInput').addEventListener('change', handleAvatarUpload);
-      loadProfile();
-    }
-
-    function closeModal() {
-      document.getElementById('settingsModalContainer').innerHTML = '';
-    }
-
-    let userId = null;
-
-    async function loadProfile() {
-      const {
-        data: { user },
-        error: authError
-      } = await supabase.auth.getUser();
-
-      if (authError || !user) {
-        alert("Ошибка авторизации.");
-        return;
+        document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
+        document.getElementById(tab).classList.add('active');
       }
 
-      userId = user.id;
-
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('id, name, phone, email, avatar_url')
-        .eq('id', userId)
-
-
-      if (profileError) {
-        console.error('Ошибка при загрузке профиля:', profileError.message);
-        return;
+      function closeLesson() {
+        document.getElementById('lessonContentContainer').style.display = 'none';
+        document.getElementById('lessonListContainer').style.display = 'block';
       }
 
-      document.getElementById('name').value = profile.name || '';
-      document.getElementById('phone').value = profile.phone || '';
-      document.getElementById('email').value = profile.email || '';
-      document.getElementById('userAvatar').src = profile.avatar_url || 'https://via.placeholder.com/120';
-    }
-
-    async function saveProfile() {
-      const saveBtn = document.getElementById('saveBtn');
-      const btnText = saveBtn.querySelector('.btn-text');
-      const spinner = saveBtn.querySelector('.spinner');
-
-      btnText.textContent = "Сохраняю…";
-      spinner.style.display = "inline";
-
-      const {
-        data: { user },
-        error: authError
-      } = await supabase.auth.getUser();
-
-      if (authError || !user) {
-        alert("Ошибка авторизации. Повторите вход.");
-        btnText.textContent = "Сохранить";
-        spinner.style.display = "none";
-        return;
+      (async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          window.location.href = '/index.html';
+          return;
+        }
+        await loadLessons();
+      })();
+      function triggerAvatarUpload() {
+        document.getElementById('avatarInput').click();
       }
 
-      const updates = {
-        id: user.id, // 💥 ОБЯЗАТЕЛЬНО: ID из auth
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        updated_at: new Date().toISOString()
-      };
+      function previewAvatar(event) {
+        const file = event.target.files[0];
+        if (!file) return;
 
-      const { error } = await supabase.from('profiles').upsert(updates);
-
-      spinner.style.display = "none";
-      btnText.textContent = "Сохранить";
-
-      if (error) {
-        alert('Ошибка при сохранении: ' + error.message);
-      } else {
-        alert('Профиль успешно сохранён!');
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('avatarPreview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       }
-    }
-
-
-    async function handleAvatarUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        document.getElementById('userAvatar').src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${userId}.${fileExt}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, { upsert: true });
-
-      if (uploadError) {
-        alert('Ошибка загрузки файла: ' + uploadError.message);
-        return;
+      async function logout() {
+        await supabase.auth.signOut();
+        window.location.href = '/index.html'; // или другой путь на логин/главную
       }
 
-      const { data: urlData } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
-
-      const publicUrl = urlData.publicUrl;
-      document.getElementById('userAvatar').src = publicUrl;
-
-      await supabase
-        .from('profiles')
-        .update({ avatar_url: publicUrl })
-        .eq('id', userId);
-    }
-
-    async function logout() {
-      await supabase.auth.signOut();
-      alert("Вы вышли из аккаунта");
-      window.location.href = '/index.html';
-      closeModal();
-    }
-
-    document.querySelectorAll('.spoiler-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const content = button.nextElementSibling;
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
-      });
-    });
 
 
-    function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
-
-      document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
-      document.getElementById(tab).classList.add('active');
-    }
-
-    async function loadProfile() {
-      const {
-        data: { user },
-        error: authError
-      } = await supabase.auth.getUser();
-
-      // Обработка ошибки получения пользователя
-      if (authError || !user) {
-        console.warn('Пользователь не авторизован. Перенаправление на страницу входа.');
-        // Перенаправление, если нужно (раскомментируй строку ниже)
-        // window.location.href = '/index.html';
-        document.getElementById('profilesList').innerHTML = `
-      <p>Вы не авторизованы. <a href="/index.html">Войти</a></p>
-    `;
-        return;
-      }
-
-      // Получение профиля текущего пользователя
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (profileError) {
-        console.error('Ошибка при загрузке профиля:', profileError.message);
-        document.getElementById('profilesList').innerHTML = `
-      <p>Ошибка при загрузке профиля. Попробуйте позже.</p>
-    `;
-        return;
-      }
-
-      // Отображение профиля
-      const listContainer = document.getElementById('profilesList');
-      listContainer.innerHTML = '';
-
-      const profileCard = document.createElement('div');
-      profileCard.className = 'profile-card';
-
-      const avatar = document.createElement('img');
-      avatar.className = 'avatar';
-      avatar.src = profile.avatar_url || 'https://via.placeholder.com/60';
-      avatar.alt = 'Avatar';
-
-      const info = document.createElement('div');
-      info.className = 'profile-info';
-      info.innerHTML = `
-    <p><strong>Имя:</strong> ${profile.name ?? '–'}</p>
-    <p><strong>Email:</strong> ${profile.email ?? '–'}</p>
-    <p><strong>Телефон:</strong> ${profile.phone ?? '–'}</p>
-    <p><strong>Обновлено:</strong> ${new Date(profile.updated_at).toLocaleString() ?? '–'}</p>
-  `;
-
-      profileCard.appendChild(avatar);
-      profileCard.appendChild(info);
-      listContainer.appendChild(profileCard);
-    }
-
-    loadProfile();
-
-
-
-
-  </script>
+    </script>
 </body>
 
 </html>

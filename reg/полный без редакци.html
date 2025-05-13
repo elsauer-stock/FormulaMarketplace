@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Обучение продажам</title>
+  <style>
+    @font-face {
+      font-family: 'centurygothic';
+      src: url(fonts/CenturyGothic.woff);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+      background-color: #1e1e2f;
+      color: #cde37e;
+      margin: 0 auto;
+    }
+
+    .button,
+    .save-btn,
+    .logout-btn,
+    .tab,
+    .btn-leson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border-radius: 10px;
+      padding: 16px 30px;
+      margin: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      border: 2px solid #555;
+      text-align: center;
+    }
+
+    .close-btn {
+      width: 770px;
+      padding: 10px;
+    }
+
+    .button:nth-child(3) {
+      margin-right: 180px;
+    }
+
+    .button:hover,
+    .save-btn:hover,
+    .logout-btn:hover,
+    .tab:hover,
+    .close-btns:hover,
+    .buttons:hover,
+    .btn-leson:hover {
+      background: #3a3a55;
+      transform: scale(1.03);
+      border: 2px solid #555;
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+    }
+
+    .buttons {
+      padding: 15px 20px;
+      font-size: 16px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border-radius: 10px;
+      padding: 16px 30px;
+      margin: 10px;
+      cursor: pointer;
+      border: 2px solid #555;
+   font-family: "Century Gothic", "Segoe UI", sans-serif;
+      
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 300px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .close-btns {
+      color: #8ab4f8;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 2px solid #555;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+
+    @keyframes fadeModal {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tab-content {
+      display: none;
+      background: #2a2a40;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #cde37e;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tab-content a {
+      color: #cde37e;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #cde37e;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #555;
+      background: #1e1e2f;
+      color: #cde37e;
+      font-size: 16px;
+    }
+
+    .logout-btn {
+      font-size: 14px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      border: 2px solid #555;
+
+    }
+
+    .save-btn {
+      font-size: 14px;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      margin-right: 25px;
+      width: 135px;
+
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #2a2a40;
+      box-shadow: inset 2px 2px 5px #1e1e2f, inset -2px -2px 5px #3a3a55;
+      border: 2px solid #555;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      color: #cde37e;
+      box-shadow: none;
+    }
+
+    .btn-leson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      border-radius: 10px;
+      font-weight: bold;
+      color: #cde37e;
+      transition: background 0.2s ease;
+    }
+    .header-flex {
+      display: flex;
+      align-items: flex-start;
+
+      gap: 15px;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    .video-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* центрирование по вертикали */
+    }
+
+    .modern-title {
+      font-family: "Century Gothic", "Segoe UI", sans-serif;
+      font-size: 45px;
+      font-weight: 600;
+      color: #cde37e;
+      /* светлый текст для тёмного фона */
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      padding: 20px 40px;
+      border-radius: 20px;
+      text-align: center;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      margin: 20px auto;
+      width: fit-content;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInSlide 0.8s ease-out forwards;
+      animation-delay: 0.3s;
+      border: 2px solid #555;
+    }
+
+    .modern-title:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #2c2c2c, #3a3a3a);
+    }
+
+    @keyframes fadeInSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lessons,
+    #lessonContentContainer {
+      background: #2a2a40;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1024px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      animation: fadeInBlock 0.5s ease-in-out;
+      border: 2px solid #555;
+    }
+
+    .lesson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      border: 2px solid #555;
+    }
+
+    @keyframes fadeInBlock {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lesson {
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 960px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      animation: fadeInBlock 0.5s ease-in-out;
+      font-size: 15px;
+      font-weight: 600;
+      color: #cde37e;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .lesson:hover {
+      transform: scale(1.05);
+      background: #3a3a55;
+      transform: scale(1.03);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-right: 90px;
+     
+    }
+
+    .social-tg img {
+      width: 40px;
+      margin-right: 5px;
+      height: 40px;
+      margin-top: 10px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      margin-left: 350px;
+       margin-top: 50px;
+      
+    }
+    .social-icon img{
+           width: 40px;
+      margin-right: 5px;
+      height: 40px;
+      margin-top: 10px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      margin-left: 350px;
+    }
+
+    .social-icon:hover img {
+      transform: scale(1.1);
+      opacity: 0.85;
+    }
+  .button,
+  .save-btn,
+  .logout-btn,
+  .buttons,
+  .btn-leson {
+    padding: 15px 20px;
+    height: auto;
+    font-size: 14px;
+  }
+
+  .tab-content {
+    font-size: 14px;
+  }
+  .social-links {
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0 0 0;
+  }
+  .video-wrapper {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  video {
+    width: 100% !important;
+  }
+
+  .header-flex {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #1e1e2f;
+  padding: 20px;
+  border-radius: 10px;
+  color: #cde37e;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  width: 300px;
+}
+.profile-info {
+  background: #2c2c3f;
+  color: #cde37e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.profile-info .avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+  </style>
+  <header>
+    <div class="header-flex">
+      <div class="modal-content">
+    <h2>Редактировать профиль</h2>
+    <label for="nameInput">Имя:</label>
+    <input type="text" id="nameInput" />
+
+    <label for="phoneInput">Телефон:</label>
+    <input type="text" id="phoneInput" />
+
+    <label for="avatarInput">Аватар:</label>
+    <input type="file" id="avatarInput" accept="image/*" />
+
+    <button onclick="saveProfile()">Сохранить</button>
+    <button onclick="closeModal()">Закрыть</button>
+  </div>
+  <div id="profileInfo" class="profile-info">
+  <img id="avatarDisplay" src="" alt="Аватар" class="avatar" />
+  <p><strong>Имя:</strong> <span id="nameDisplay"></span></p>
+  <p><strong>Телефон:</strong> <span id="phoneDisplay"></span></p>
+  <p><strong>Монеты:</strong> <span id="coinsDisplay"></span></p>
+</div>
+
+<button onclick="openModal()">Редактировать профиль</button>
+      <a href="broadcatss.html" class="button">Эфиры</a>
+      <a href="support.html" class="button">Поддержка</a>
+        <div class="social-links">
+          <a href="https://t.me/+yXTLrorTZdM1ZWVi" target="_blank" class="social-tg">
+           <img src="telegram.svg" alt="Wildberries" />
+          </a>
+          </div>
+          <div class="social-links">
+          <a href="https://seller.wildberries.ru" target="_blank" class="social-icon">
+            <img src="wildberries.svg" alt="Wildberries" />
+          </a>
+            </div>
+    </div>
+    <div class="logo-container">
+      <img src="/logo.png" alt="Логотип" class="logo">
+      <h1 class="modern-title">Formula Marketplace</h1>
+    </div>
+  </header>
+</head>
+<body>
+  <div class="lessons" id="lessonListContainer"></div>
+  <div id="lessonContentContainer" style="display:none;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.6/dist/umd/supabase.min.js"></script>
+  <script>
+    const supabase = window.supabase.createClient(
+      'https://mnsluarozhgjzxzyceyc.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uc2x1YXJvemhnanp4enljZXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNDI3MzAsImV4cCI6MjA1OTcxODczMH0.O9EdkdlU1gBShNV-obV-07E5WY6NAum7SrmG7AHJow8'
+    );
+    loadProfile();
+    async function loadLessons() {
+      const today = new Date();
+
+      const { data: lessons, error } = await supabase
+        .from('lessons')
+        .select('id, available_from');
+
+      if (error) {
+        console.error('❌ Ошибка загрузки уроков:', error);
+        return;
+      }
+
+      lessons.sort((a, b) => new Date(a.available_from) - new Date(b.available_from));
+
+      const container = document.getElementById('lessonListContainer');
+      container.innerHTML = '';
+
+      for (const [index, lesson] of lessons.entries()) {
+        const availableDate = new Date(lesson.available_from);
+        const isAvailable = availableDate <= today;
+
+        const div = document.createElement('div');
+        div.className = 'lesson';
+        div.style.marginBottom = '20px';
+
+        if (isAvailable) {
+          // Подгружаем title из lesson_details (основной и единственный заголовок)
+          const { data: detail, error: detailError } = await supabase
+            .from('lesson_details')
+            .select('title')
+            .eq('lesson_id', lesson.id)
+            .single();
+
+          const detailTitle = (!detailError && detail) ? detail.title : `Урок ${index + 1}`;
+
+          // Проверка: начинается ли detailTitle с "Урок"
+          const startsWithUrok = detailTitle.toLowerCase().startsWith('урок');
+
+          div.innerHTML = `
+  <div style="cursor:pointer;" onclick="openLessonDynamic(${lesson.id})">
+    ${startsWithUrok ? '' : `<strong>Урок ${index + 1}</strong>`}
+    <p>${detailTitle}</p>
+  </div>
+`;
+        } else {
+          div.textContent = `Урок ${index + 1} — откроется ${availableDate.toLocaleDateString('ru-RU')}`;
+        }
+
+        container.appendChild(div);
+      }
+    }
+    async function openLessonDynamic(lessonId) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session || !session.user) {
+        window.location.href = '/index.html';
+        return;
+      }
+
+      const { data: lessonDetail, error } = await supabase
+        .from('lesson_details')
+        .select('*')
+        .eq('lesson_id', lessonId)
+        .single(); // предполагается, что на каждый lesson.id ровно один detail
+
+      if (error || !lessonDetail) {
+        console.error('❌ Ошибка загрузки деталей урока:', error);
+        return;
+      }
+
+      const content = document.getElementById('lessonContentContainer');
+      content.innerHTML = `
+    <button class="btn-leson" onclick="closeLesson()">← Назад</button>
+    <h2>${lessonDetail.title}</h2>
+    <div class="video-wrapper">
+      <video id="lesson-video" controls width="75%">
+        <source src="${lessonDetail.video_url}" type="video/mp4">
+      </video>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('desc')">Описание</button>
+      <button class="tab" onclick="switchTab('hw')">Домашка</button>
+    </div>
+    <div id="desc" class="tab-content active">${lessonDetail.materials_description || 'Нет описания'}</div>
+    <div id="hw" class="tab-content">${lessonDetail.homework_description || 'Домашка пока не добавлена'}</div>
+  `;
+
+      document.getElementById('lessonListContainer').style.display = 'none';
+      content.style.display = 'block';
+
+      const video = document.getElementById('lesson-video');
+      const KEY = `lesson-${lessonId}-time`;
+
+      video.addEventListener('loadedmetadata', () => {
+        const t = localStorage.getItem(KEY);
+        if (t) video.currentTime = parseFloat(t);
+      });
+
+      video.addEventListener('timeupdate', () => {
+        localStorage.setItem(KEY, video.currentTime);
+      });
+    }
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
+
+      document.querySelector(`.tab[onclick*="${tab}"]`).classList.add('active');
+      document.getElementById(tab).classList.add('active');
+    }
+
+    function closeLesson() {
+      document.getElementById('lessonContentContainer').style.display = 'none';
+      document.getElementById('lessonListContainer').style.display = 'block';
+    }
+
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = '/index.html';
+        return;
+      }
+      await loadLessons();
+    })();
+// изменения профиля
+async function openModal() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (error) return alert('Ошибка загрузки профиля');
+
+    document.getElementById('nameInput').value = data.name || '';
+    document.getElementById('phoneInput').value = data.phoneNumber || '';
+    document.getElementById('editModal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+  }
+  
+
+  async function saveProfile() {
+    const name = document.getElementById('nameInput').value;
+    const phoneNumber = document.getElementById('phoneInput').value;
+    const avatarFile = document.getElementById('avatarInput').files[0];
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    let avatarUrl = null;
+    if (avatarFile) {
+      const { data: uploadData, error: uploadError } = await supabase
+        .storage
+        .from('avatars')
+        .upload(`${user.id}/${avatarFile.name}`, avatarFile, {
+          upsert: true
+        });
+
+      if (uploadError) return alert('Ошибка загрузки аватара');
+      avatarUrl = supabase.storage.from('avatars').getPublicUrl(uploadData.path).data.publicUrl;
+    }
+
+    const updates = {
+      name,
+      phoneNumber,
+      ...(avatarUrl && { avatar: avatarUrl })
+    };
+
+    const { error } = await supabase
+      .from('users')
+      .update(updates)
+      .eq('id', user.id);
+
+    if (error) return alert('Ошибка сохранения');
+await loadProfile(); 
+    alert('Данные обновлены!');
+    closeModal();
+  }
+
+  // Вызов, например по кнопке
+  window.openModal = openModal;
+// показ профиля
+async function loadProfile() {
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if (error) return alert('Ошибка загрузки профиля');
+
+  document.getElementById('avatarDisplay').src = data.avatar || 'https://via.placeholder.com/100';
+  document.getElementById('nameDisplay').innerText = data.name || '-';
+  document.getElementById('phoneDisplay').innerText = data.phoneNumber || '-';
+  document.getElementById('coinsDisplay').innerText = data.coins ?? '0';
+}
+
+
+
+  </script>
+</body>
+
+</html>

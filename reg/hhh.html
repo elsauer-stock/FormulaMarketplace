@@ -1,0 +1,99 @@
+---------------------------------------------------------Изменения пользователя--------------------------------------------------------------------------
+
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #1e1e2f;
+  padding: 20px;
+  border-radius: 10px;
+  color: #cde37e;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  width: 300px;
+}
+ 
+
+ 
+ <div class="modal-content">
+    <h2>Редактировать профиль</h2>
+    <label for="nameInput">Имя:</label>
+    <input type="text" id="nameInput" />
+
+    <label for="phoneInput">Телефон:</label>
+    <input type="text" id="phoneInput" />
+
+    <label for="avatarInput">Аватар:</label>
+    <input type="file" id="avatarInput" accept="image/*" />
+
+    <button onclick="saveProfile()">Сохранить</button>
+    <button onclick="closeModal()">Закрыть</button>
+  </div>
+<script>
+   async function openModal() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (error) return alert('Ошибка загрузки профиля');
+
+    document.getElementById('nameInput').value = data.name || '';
+    document.getElementById('phoneInput').value = data.phoneNumber || '';
+    document.getElementById('editModal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+  }
+
+  async function saveProfile() {
+    const name = document.getElementById('nameInput').value;
+    const phoneNumber = document.getElementById('phoneInput').value;
+    const avatarFile = document.getElementById('avatarInput').files[0];
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    let avatarUrl = null;
+    if (avatarFile) {
+      const { data: uploadData, error: uploadError } = await supabase
+        .storage
+        .from('avatars')
+        .upload(`${user.id}/${avatarFile.name}`, avatarFile, {
+          upsert: true
+        });
+
+      if (uploadError) return alert('Ошибка загрузки аватара');
+      avatarUrl = supabase.storage.from('avatars').getPublicUrl(uploadData.path).data.publicUrl;
+    }
+
+    const updates = {
+      name,
+      phoneNumber,
+      ...(avatarUrl && { avatar: avatarUrl })
+    };
+
+    const { error } = await supabase
+      .from('users')
+      .update(updates)
+      .eq('id', user.id);
+
+    if (error) return alert('Ошибка сохранения');
+
+    alert('Данные обновлены!');
+    closeModal();
+  }
+
+  // Вызов, например по кнопке
+  window.openModal = openModal;
+</script>
+---------------------------------------------------------Показ пользователя--------------------------------------------------------------------------
